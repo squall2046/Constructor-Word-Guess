@@ -3,7 +3,7 @@
 ## Overview
 This is a Word Guess game built with constructor functions. It is a **command line node app** that takes in parameters and gives you back data. The game receive user input using the `inquirer`, `chalk`, `figlet` and `boxen` npm packages.
 ####   :point_right: Click  **[>>>Here<<<](https://youtu.be/ZH--1385PGc)**  Check my :tv: video to see how it works.
-![concert](/imgs/w7.jpg)
+![concert](./w7.jpg)
 
 
 ## 📓 Instruction
