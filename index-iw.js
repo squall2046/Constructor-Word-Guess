@@ -6,6 +6,7 @@ const figlet = require('figlet');
 const boxen = require('boxen');
 
 // global variables
+function reset() {
 let gameArr = ["elastigirl", "incredible", "jack-jack", "dash", "violetparr", "frozone", "ednamode", "syndrome", "voyd"];
 let pickWord = gameArr[Math.floor(Math.random() * (gameArr.length))];
 let hearts = ["♥"];
@@ -20,6 +21,8 @@ let newWord = new Word(pickWord);
 newWord.LetterArr();
 newWord.newPlayerLetter();
 newWord.newShowLetter();
+};
+reset();
 
 //////////////////////////////////// function ////////////////////////////////////
 
@@ -28,11 +31,12 @@ figlet(' Incredible !!  ', function (err, data) {
     if (err) { console.dir(err); return }
     console.log("\n" + chalk.bgRed(data) + "\n");
     console.log(chalk.redBright.bold("       - Welcome to Incredible Word Guess Game! -\n\n\n\n"))
-    preGame();
+    return preGame();
 });
 
 // before Game start
 function preGame() {
+    reset();
     inquirer.prompt([{
         type: "list",
         message: "Are you ready for adventure?",
@@ -40,10 +44,10 @@ function preGame() {
         name: "preGame"
     }]).then(function (response) {
         if (response.preGame.toString() === "Let's Go") {
-            console.log(boxen(chalk.blueBright("\n\n   The Incredible Word:          \n\n"), { padding: 1, margin: 1, borderStyle: 'round' }))
+            console.log(boxen(chalk.blueBright("\n\n   The Incredible Word: " + newWord.wordArr.join(" ") + "   \n\n"), { padding: 1, margin: 1, borderStyle: 'round' }))
             console.log(chalk.red("Chances: ") + chalk.redBright(hearts.join(" ")));
             console.log(chalk.yellow("Chosen: \n\n\n\n"));
-            gameStart();
+            return gameStart();
         } else if (response.preGame.toString() === "Quit Game") {
             console.log("I'm always at your service!");
         } else {
@@ -91,7 +95,6 @@ function gameStart() {
                 console.log(chalk.red("Chances: ") + chalk.redBright(hearts.join(" ")));
                 console.log(chalk.yellow("Chosen: ") + chalk.yellowBright(guessedArr.join(" ")));
                 console.log(chalk.greenBright("\n\nCorrect!\n\n\n\n"))
-                gameStart();
                 // a.win
                 if (expose === pickWord.length) {
                     figlet(' You Win !!  ', function (err, data) {
@@ -100,8 +103,9 @@ function gameStart() {
                         console.log(chalk.redBright("   The Word is: " + pickWord));
                         console.log(chalk.redBright("   Congratulations!\n\n\n\n\n\n\n\n"));
                     });
-                    return reGame();
+                    return preGame();
                 }
+                return gameStart();
             };
 
             // B.wrong guess
@@ -115,7 +119,6 @@ function gameStart() {
                 console.log(chalk.red("Chances: ") + chalk.redBright(hearts.join(" ")));
                 console.log(chalk.yellow("Chosen: ") + chalk.yellowBright(guessedArr.join(" ")));
                 console.log(chalk.greenBright("\n\nIncorrect.\n\n\n\n"));
-                gameStart();
                 // b.lose
                 if (chances === 0) {
                     figlet(' Game Over !!  ', function (err, data) {
@@ -124,8 +127,9 @@ function gameStart() {
                         console.log(chalk.blue("   You were so close..."));
                         console.log(chalk.blue("   The Word is: " + pickWord + "\n\n\n\n\n\n\n\n"));
                     });
-                    return reGame();
+                    return preGame();
                 }
+                return gameStart();
             };
             // exceptions:
         } else {
@@ -134,32 +138,3 @@ function gameStart() {
         };
     })
 }
-
-// Re-enter
-function reGame() {
-    inquirer.prompt([{
-        type: "confirm",
-        message: "Would you like to play again?",
-        name: "playAgain"
-    }]).then(function (replay) {
-        if (replay.playAgain) {
-            // reset
-            gameArr = ["elastigirl", "incredible", "jack-jack", "dash", "violetparr", "frozone", "ednamode", "syndrome", "voyd"];
-            pickWord = gameArr[Math.floor(Math.random() * (gameArr.length))];
-            hearts = ["♥"];
-            chances = 6;
-            for (var h = 1; h < chances; h++) { hearts.push("♥") }
-            expose = 0;
-            guessedArr = [];
-            newGuess = "";
-            newWord = new Word(pickWord);
-            newWord.LetterArr();
-            newWord.newPlayerLetter();
-            newWord.newShowLetter()
-            gameStart();
-        } else {
-            console.log("I'm always at your service!");
-            return process.exit();
-        }
-    })
-};
