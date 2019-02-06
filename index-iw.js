@@ -6,7 +6,6 @@ const figlet = require('figlet');
 const boxen = require('boxen');
 
 // global variables
-function reset() {
 let gameArr = ["elastigirl", "incredible", "jack-jack", "dash", "violetparr", "frozone", "ednamode", "syndrome", "voyd"];
 let pickWord = gameArr[Math.floor(Math.random() * (gameArr.length))];
 let hearts = ["♥"];
@@ -21,8 +20,6 @@ let newWord = new Word(pickWord);
 newWord.LetterArr();
 newWord.newPlayerLetter();
 newWord.newShowLetter();
-};
-reset();
 
 //////////////////////////////////// function ////////////////////////////////////
 
@@ -33,6 +30,24 @@ figlet(' Incredible !!  ', function (err, data) {
     console.log(chalk.redBright.bold("       - Welcome to Incredible Word Guess Game! -\n\n\n\n"))
     return preGame();
 });
+
+// reset
+function reset() {
+    let gameArr = ["elastigirl", "incredible", "jack-jack", "dash", "violetparr", "frozone", "ednamode", "syndrome", "voyd"];
+    let pickWord = gameArr[Math.floor(Math.random() * (gameArr.length))];
+    let hearts = ["♥"];
+    let chances = 6;
+    for (var h = 1; h < chances; h++) { hearts.push("♥") }
+    let expose = 0;
+    let guessedArr = [];
+    let newGuess = "";
+
+    // constructor
+    let newWord = new Word(pickWord);
+    newWord.LetterArr();
+    newWord.newPlayerLetter();
+    newWord.newShowLetter();
+};
 
 // before Game start
 function preGame() {
