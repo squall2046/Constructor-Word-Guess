@@ -33,17 +33,15 @@ figlet(' Incredible !!  ', function (err, data) {
 
 // reset
 function reset() {
-    let gameArr = ["elastigirl", "incredible", "jack-jack", "dash", "violetparr", "frozone", "ednamode", "syndrome", "voyd"];
-    let pickWord = gameArr[Math.floor(Math.random() * (gameArr.length))];
-    let hearts = ["♥"];
-    let chances = 6;
+    gameArr = ["elastigirl", "incredible", "jack-jack", "dash", "violetparr", "frozone", "ednamode", "syndrome", "voyd"];
+    pickWord = gameArr[Math.floor(Math.random() * (gameArr.length))];
+    hearts = ["♥"];
+    chances = 6;
     for (var h = 1; h < chances; h++) { hearts.push("♥") }
-    let expose = 0;
-    let guessedArr = [];
-    let newGuess = "";
-
-    // constructor
-    let newWord = new Word(pickWord);
+    expose = 0;
+    guessedArr = [];
+    newGuess = "";
+    newWord = new Word(pickWord);
     newWord.LetterArr();
     newWord.newPlayerLetter();
     newWord.newShowLetter();
