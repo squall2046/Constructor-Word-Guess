@@ -7,8 +7,8 @@
     "boxen": "^2.1.0",
     "chalk": "^2.4.2",
     "chalklet": "^1.0.0",
-    "figlet": "^1.2.1",
-    "inquirer": "^6.2.1"
+    "figlet": "^1.2.3",
+    "inquirer": "^6.5.0"
   },
   "devDependencies": {},
   "scripts": {
